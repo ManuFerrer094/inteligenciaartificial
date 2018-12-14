@@ -1,0 +1,42 @@
+body{
+	background: black;
+}
+
+#contenedor{
+	background-image: url("img/fondo_estrellado.jpg");
+	margin: auto;
+	position: relative;
+	height: 500px;
+	width: 500px;
+	border: 1px solid white;
+	margin: auto;
+	box-shadow: 0px 0px 30px white;
+	
+}
+
+#jugador img{
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: 450px;
+	left: 225px;
+}
+
+.bala{
+	position: absolute;
+	width: 5px;
+	height: 20px;
+	background: white;
+}
+.balaenemigo{
+	position: absolute;
+	width: 5px;
+	height: 20px;
+	background: red;
+}
+
+.imgenemigo{
+	width: 50px;
+	height: 50px;
+	position: absolute;	
+}

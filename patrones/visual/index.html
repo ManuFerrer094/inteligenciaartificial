@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <style>canvas{border:1px solid black;}</style>
+    </head>
+    <body>
+        <canvas width="900px" height="450px" id="milla"> </canvas>
+        <canvas width="108px" height="108px" id="ojo"> </canvas>
+        <script>
+            var milla = new Image();
+            milla.src = "hugo.jpg";
+            var ojo = new Image();
+            ojo.src = "soloojo.jpg"
+            
+            var resolucion = 256;
+            
+            var contextomilla = document.getElementById("milla").getContext("2d");
+            var contextoojo = document.getElementById("ojo").getContext("2d");
+            function inicio(resolucion){
+                // En primer lugar pinto los canvas
+                contextomilla.drawImage(milla,0,0);
+                contextoojo.drawImage(ojo,0,0);
+                var mejorcandidato = 10000000000
+                var mejorcandidatox = 0;
+                var mejorcandidatoy = 0;
+                var contador = 0;
+                var maximo = 900*450/(maximo*maximo);
+                // Cargo la informacion del ojo en una matriz
+                var infoojo = contextoojo.getImageData(0,0,108,108);
+                //console.log(infoojo);
+                for(var x = 0;x<900;x += resolucion){
+                    for(var y = 0;y<450;y += resolucion){
+                        var cachotemporal = contextomilla.getImageData(x,y,108,108);
+                        var marcador = 0;
+                        for(var i = 0;i<infoojo.data.length;i+= resolucion){
+                            marcador += Math.abs(infoojo.data[i] - cachotemporal.data[i]);
+                        }
+                        if(marcador < mejorcandidato){
+                            mejorcandidato = marcador;
+                            mejorcandidatox = x;
+                            mejorcandidatoy = y;
+                        }
+                        if(contador % 100 == 0){console.log("avance en porcentaje: "+(contador/maximo*100)+"%")}
+                        contador++;
+                        
+                    }
+                }
+                console.log("Que sepas que el mejor candidato ha sacado una puntuacion de: "+mejorcandidato)
+                contextomilla.beginPath();
+                contextomilla.strokeStyle = "#ff0000";
+                contextomilla.rect(mejorcandidatox,mejorcandidatoy,108,108);
+                contextomilla.stroke();
+                if(resolucion != 1){
+                    resolucion /= 2;
+                    setTimeout("inicio("+resolucion+")",1000);
+                }
+            }
+            
+            
+            setTimeout("inicio("+resolucion+")",1000);
+        </script>
+    </body>
+</html>

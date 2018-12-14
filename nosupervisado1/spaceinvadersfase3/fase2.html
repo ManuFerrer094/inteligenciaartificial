@@ -1,0 +1,47 @@
+<html>
+    <script>
+        // SQL para navegador
+    var db_name = 'ai';
+    var db_version = '';
+    var db_describe = 'Esto es una prueba';
+    var db_size = 2048;
+    var db
+
+
+    db = openDatabase(db_name, db_version, db_describe, db_size, function(db) {
+       
+        createTable(db);
+        
+    });
+    
+     db.transaction(function(tx) {
+        console.log("ejecutando")
+        tx.executeSql('DELETE FROM intentos WHERE acierto = ?', [0], function(transaction, result) {
+            
+        }, function(transaction, error) {
+            //console.log(error);
+        });
+    }, transError, transSuccess);
+	
+
+function createTable(db) {
+   
+    }
+    function transError(t, e) {
+        console.log("fracaso")
+       /* console.log(t);
+        console.log(e);
+        console.error("Error occured ! Code:" + e.code + " Message : " + e.message);*/
+    }
+    
+    function transSuccess(t, r) {
+        console.log("exito")
+        /*
+        console.info("Transaction completed Successfully!");
+        console.log(t);
+        console.log(r);
+        */
+    }
+    
+    </script>
+</html>
